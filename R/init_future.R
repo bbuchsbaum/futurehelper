@@ -25,8 +25,12 @@
 #' @details
 #' The `"callr"` backend requires the \pkg{future.callr} package.
 #' The `"mirai_multisession"` and `"mirai_cluster"` backends require the
-#' \pkg{future.mirai} package. If the required package is not installed, the
-#' function will stop with an informative error.
+#' \pkg{future.mirai} package (and \pkg{mirai}). If the required package is
+#' not installed, the function will stop with an informative error.
+#'
+#' For `"mirai_cluster"`, daemons are launched automatically via
+#' [mirai::daemons()] with the requested number of `cores`. This differs
+#' from `"mirai_multisession"` which handles daemon management internally.
 #'
 #' @export
 #' @examples
@@ -87,14 +91,22 @@ init_future <- function(cores = slurm_cores(),
     },
     mirai_cluster = {
       .require_pkg("future.mirai", type)
+      .require_pkg("mirai", type)
+      mirai::daemons(cores)
       future.mirai::mirai_cluster
     }
   )
 
-  if (nested) {
-    p <- future::plan(list(future::sequential, future::tweak(plan_fn, workers = cores)))
+  if (type == "mirai_cluster") {
+    if (nested) {
+      p <- plan(list(sequential, plan_fn))
+    } else {
+      p <- plan(plan_fn)
+    }
+  } else if (nested) {
+    p <- plan(list(sequential, tweak(plan_fn, workers = cores)))
   } else {
-    p <- future::plan(future::tweak(plan_fn, workers = cores))
+    p <- plan(plan_fn, workers = cores)
   }
 
   invisible(p)

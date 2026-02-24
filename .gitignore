@@ -4,4 +4,5 @@
 .Ruserdata
 *.tar.gz
 *.Rcheck/
+.rcmdcheck_result.rds
 .omc/

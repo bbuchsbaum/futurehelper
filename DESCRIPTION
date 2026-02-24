@@ -16,4 +16,5 @@ Imports:
     parallelly
 Suggests:
     future.callr,
-    future.mirai
+    future.mirai,
+    mirai

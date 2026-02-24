@@ -42,8 +42,12 @@ backend.
 \details{
 The \code{"callr"} backend requires the \pkg{future.callr} package.
 The \code{"mirai_multisession"} and \code{"mirai_cluster"} backends require the
-\pkg{future.mirai} package. If the required package is not installed, the
-function will stop with an informative error.
+\pkg{future.mirai} package (and \pkg{mirai}). If the required package is
+not installed, the function will stop with an informative error.
+
+For \code{"mirai_cluster"}, daemons are launched automatically via
+\code{\link[mirai:daemons]{mirai::daemons()}} with the requested number of \code{cores}. This differs
+from \code{"mirai_multisession"} which handles daemon management internally.
 }
 \examples{
 \dontrun{
