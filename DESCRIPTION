@@ -5,8 +5,11 @@ Authors@R: person("Bradley", "Buchsbaum", email = "brad.buchsbaum@gmail.com",
                    role = c("aut", "cre"))
 Description: Provides a simple interface for initializing 'future' parallel
     evaluation plans without needing to remember the various plan constructors
-    and tweaking syntax. Supports multicore, multisession, and callr backends
-    with sensible defaults for memory limits and worker counts.
+    and tweaking syntax. Supports multicore, multisession, callr, and mirai
+    backends with sensible defaults for memory limits and worker counts.
+    Includes utilities for plan inspection, temporary plan switching,
+    backend benchmarking, SLURM/HPC environment integration, a unified
+    options controller, and system capabilities reporting.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

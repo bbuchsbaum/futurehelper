@@ -6,7 +6,7 @@
 \alias{futurehelper-package}
 \title{futurehelper: Convenient Setup of Future Plans}
 \description{
-Provides a simple interface for initializing 'future' parallel evaluation plans without needing to remember the various plan constructors and tweaking syntax. Supports multicore, multisession, and callr backends with sensible defaults for memory limits and worker counts.
+Provides a simple interface for initializing 'future' parallel evaluation plans without needing to remember the various plan constructors and tweaking syntax. Supports multicore, multisession, callr, and mirai backends with sensible defaults for memory limits and worker counts. Includes utilities for plan inspection, temporary plan switching, backend benchmarking, SLURM/HPC environment integration, a unified options controller, and system capabilities reporting.
 }
 \author{
 \strong{Maintainer}: Bradley Buchsbaum \email{brad.buchsbaum@gmail.com}
