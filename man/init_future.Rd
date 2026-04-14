@@ -46,8 +46,10 @@ The \code{"mirai_multisession"} and \code{"mirai_cluster"} backends require the
 not installed, the function will stop with an informative error.
 
 For \code{"mirai_cluster"}, daemons are launched automatically via
-\code{\link[mirai:daemons]{mirai::daemons()}} with the requested number of \code{cores}. This differs
-from \code{"mirai_multisession"} which handles daemon management internally.
+\code{\link[mirai:daemons]{mirai::daemons()}} with the requested number of \code{cores}, and package-managed
+daemons are stopped by \code{\link[=reset_future]{reset_future()}} or when a different backend is activated. Package-managed daemons use a dedicated mirai compute profile to
+avoid clobbering the user's default mirai profile. This differs from
+\code{"mirai_multisession"} which handles daemon management internally.
 }
 \examples{
 \dontrun{

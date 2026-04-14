@@ -17,6 +17,9 @@
 #'
 #' @seealso [with_plan()] for the lower-level interface that takes a plan
 #'   function directly, [init_future()] for persistent plan setup.
+#'   If [init_future()] launches package-managed mirai daemons for
+#'   `type = "mirai_cluster"`, they are restored together with the previous
+#'   plan on exit.
 #'
 #' @export
 #' @examples
@@ -43,12 +46,8 @@ with_parallel <- function(expr,
                           mem = 4,
                           type = "multicore",
                           nested = FALSE) {
-  old_plan <- plan()
-  old_maxsize <- getOption("future.globals.maxSize")
-  on.exit({
-    plan(old_plan)
-    options(future.globals.maxSize = old_maxsize)
-  }, add = TRUE)
+  old_state <- .capture_future_state()
+  on.exit(.restore_future_state(old_state), add = TRUE)
 
   init_future(cores = cores, mem = mem, nested = nested, type = type)
   force(expr)

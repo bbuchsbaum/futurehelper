@@ -29,8 +29,11 @@
 #' not installed, the function will stop with an informative error.
 #'
 #' For `"mirai_cluster"`, daemons are launched automatically via
-#' [mirai::daemons()] with the requested number of `cores`. This differs
-#' from `"mirai_multisession"` which handles daemon management internally.
+#' [mirai::daemons()] with the requested number of `cores`, and package-managed
+#' daemons are stopped by [reset_future()] or when a different backend is
+#' activated. Package-managed daemons use a dedicated mirai compute profile to
+#' avoid clobbering the user's default mirai profile. This differs from
+#' `"mirai_multisession"` which handles daemon management internally.
 #'
 #' @export
 #' @examples
@@ -78,6 +81,8 @@ init_future <- function(cores = slurm_cores(),
     }
   }
 
+  .stop_managed_mirai_cluster()
+
   plan_fn <- switch(type,
     multicore    = future::multicore,
     multisession = future::multisession,
@@ -92,7 +97,7 @@ init_future <- function(cores = slurm_cores(),
     mirai_cluster = {
       .require_pkg("future.mirai", type)
       .require_pkg("mirai", type)
-      mirai::daemons(cores)
+      .start_managed_mirai_cluster(cores)
       future.mirai::mirai_cluster
     }
   )

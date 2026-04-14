@@ -27,6 +27,11 @@ with_parallel(
 \value{
 The result of evaluating \code{expr}.
 }
+\details{
+If \code{\link[=init_future]{init_future()}} launches package-managed mirai daemons for
+\code{type = "mirai_cluster"}, they are restored together with the previous
+plan on exit.
+}
 \description{
 A high-level convenience wrapper that initializes a parallel
 \code{\link[future:plan]{future::plan()}}, evaluates \code{expr}, and restores the previous plan on exit

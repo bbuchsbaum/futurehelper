@@ -16,7 +16,8 @@ future package default of ~500 MiB).}
 }
 \description{
 Resets the \code{\link[future:plan]{future::plan()}} to \link[future:sequential]{future::sequential} and clears the
-\code{future.globals.maxSize} option back to the default.
+\code{future.globals.maxSize} option back to the default. If the active backend
+was a package-managed \code{"mirai_cluster"}, its daemons are also stopped.
 }
 \examples{
 \dontrun{

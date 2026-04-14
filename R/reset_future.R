@@ -1,7 +1,8 @@
 #' Reset Future Plan to Sequential
 #'
 #' Resets the [future::plan()] to [future::sequential] and clears the
-#' `future.globals.maxSize` option back to the default.
+#' `future.globals.maxSize` option back to the default. If the active backend
+#' was a package-managed `"mirai_cluster"`, its daemons are also stopped.
 #'
 #' @param globals_maxsize The value to reset `future.globals.maxSize` to.
 #'   Default is `NULL`, which removes the option entirely (restoring the
@@ -16,7 +17,5 @@
 #' reset_future()
 #' }
 reset_future <- function(globals_maxsize = NULL) {
-  plan(sequential)
-  options(future.globals.maxSize = globals_maxsize)
-  invisible(NULL)
+  .set_sequential_plan(globals_maxsize = globals_maxsize)
 }

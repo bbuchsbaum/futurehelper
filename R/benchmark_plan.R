@@ -46,8 +46,8 @@ benchmark_plan <- function(expr,
                            vary_cores = FALSE) {
 
   expr_q <- substitute(expr)
-  old_plan <- plan()
-  on.exit(plan(old_plan), add = TRUE)
+  old_state <- .capture_future_state()
+  on.exit(.restore_future_state(old_state), add = TRUE)
 
   # Auto-detect available backends
   if (auto_detect) {
@@ -101,7 +101,7 @@ benchmark_plan <- function(expr,
           elapsed = as.numeric(elapsed), stringsAsFactors = FALSE
         )
 
-        plan(sequential)
+        .set_sequential_plan()
       }
     }
   }
